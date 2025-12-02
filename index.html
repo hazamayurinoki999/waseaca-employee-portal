@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>早稲田アカデミー海外校ポータル</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #05060a;
+      --card: #0f111a;
+      --text: #e7ecff;
+      --muted: #9fb0c6;
+      --accent: #7ae3ff;
+      --radius: 18px;
+      --glass: rgba(255, 255, 255, 0.05);
+      --panel-blur: 16px;
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 20%, rgba(122, 227, 255, 0.15), transparent 30%),
+                  radial-gradient(circle at 80% 10%, rgba(255, 179, 114, 0.18), transparent 32%),
+                  radial-gradient(circle at 50% 80%, rgba(124, 88, 255, 0.15), transparent 28%),
+                  var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .orbital {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(90px);
+      opacity: 0.55;
+    }
+    .orbital span {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+      animation: float 16s ease-in-out infinite;
+    }
+    .orbital span:nth-child(1) { background: #7ae3ff; top: 12%; left: 12%; }
+    .orbital span:nth-child(2) { background: #ffb372; top: 8%; right: 10%; animation-delay: -4s; }
+    .orbital span:nth-child(3) { background: #8b7bff; bottom: 8%; left: 15%; animation-delay: -8s; }
+
+    @keyframes float {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(24px, -32px, 0) scale(1.05); }
+    }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 28px;
+      backdrop-filter: blur(var(--panel-blur));
+      background: linear-gradient(120deg, rgba(122, 227, 255, 0.12), rgba(124, 88, 255, 0.08));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 6;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: conic-gradient(from 120deg, #7ae3ff, #8b7bff, #ffb372, #7ae3ff);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      color: #05060a;
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .pill {
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--muted);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 14px;
+    }
+
+    main { position: relative; z-index: 1; }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 120px 24px 80px;
+      text-align: center;
+    }
+    .press {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 220px;
+      height: 220px;
+      border-radius: 35px;
+      background: linear-gradient(145deg, rgba(122, 227, 255, 0.22), rgba(124, 88, 255, 0.18));
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 24px 90px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.3);
+      font-size: 48px;
+      letter-spacing: 0.18em;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      overflow: hidden;
+    }
+    .press::after {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border-radius: 28px;
+      background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.22), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .press:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 30px 110px rgba(0,0,0,0.4); }
+    .press:hover::after { opacity: 1; }
+    .press-sub {
+      margin-top: 28px;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+    }
+
+    .campus-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      padding: 24px;
+    }
+    .campus-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius);
+      padding: 18px;
+      display: grid;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+      cursor: pointer;
+      transform-style: preserve-3d;
+    }
+    .campus-card::before {
+      content: '';
+      position: absolute;
+      inset: -20%;
+      background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 45%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .campus-card:hover {
+      transform: translateY(-6px) rotateX(6deg) rotateY(-4deg);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+    .campus-card:hover::before { opacity: 1; }
+    .campus-name { font-size: 22px; font-weight: 700; letter-spacing: 0.02em; }
+    .campus-meta { color: var(--muted); font-size: 14px; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      width: fit-content;
+    }
+
+    .panel {
+      max-width: 1180px;
+      margin: 0 auto;
+      background: rgba(10, 12, 18, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+      backdrop-filter: blur(18px);
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .panel-title { font-size: 24px; font-weight: 700; }
+
+    .login, .campus-page, .selection {
+      opacity: 0;
+      transform: translateY(24px);
+      pointer-events: none;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .login.active, .campus-page.active, .selection.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+    label { font-weight: 600; color: var(--text); }
+    input {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-size: 15px;
+    }
+    .btn {
+      border: none;
+      padding: 14px 18px;
+      border-radius: 12px;
+      background: linear-gradient(120deg, #7ae3ff, #8b7bff);
+      color: #05060a;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 18px 50px rgba(122, 227, 255, 0.28);
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 22px 60px rgba(139, 123, 255, 0.35); }
+    .btn.secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      box-shadow: none;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .campus-hero {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .campus-hero h2 { margin: 0; font-size: 28px; }
+    .campus-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .checklist {
+      display: grid;
+      gap: 14px;
+      margin-top: 12px;
+    }
+    select, .toggle {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-size: 15px;
+    }
+    .toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .toggle input { width: auto; }
+
+    .tagline { color: var(--muted); font-weight: 500; }
+
+    @media (max-width: 720px) {
+      header { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .panel { padding: 20px; }
+      .press { width: 180px; height: 180px; font-size: 38px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="orbital" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+  <header>
+    <div class="logo">
+      <div class="logo-mark">WA</div>
+      <div>
+        <div>WASEDA ACADEMY</div>
+        <small style="color: var(--muted); font-weight: 600;">Global Campus Portal</small>
+      </div>
+    </div>
+    <div class="pill">モダン&透明感 / 幾何学3Dトーン</div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="panel">
+        <div class="selection" id="selection">
+          <div class="panel-header">
+            <div>
+              <div class="chip">Choose Campus</div>
+              <div class="panel-title">校舎を選択してください</div>
+              <p class="tagline">選ぶたびにニュアンスが変わる、躍動的な世界観。</p>
+            </div>
+            <button class="btn secondary" id="resetBtn" style="display:none;">戻る</button>
+          </div>
+          <div class="campus-grid" id="campusGrid"></div>
+        </div>
+        <div class="login" id="login">
+          <div class="panel-header">
+            <div>
+              <div class="chip">Login</div>
+              <div class="panel-title" id="loginTitle"></div>
+              <p class="tagline">メールアドレスとパスワードを入力（入力無しでもログイン可）</p>
+            </div>
+            <button class="btn secondary" id="backToSelection">校舎選択へ</button>
+          </div>
+          <form id="loginForm">
+            <label>メールアドレス
+              <input type="email" name="email" placeholder="name@example.com" autocomplete="username">
+            </label>
+            <label>パスワード
+              <input type="password" name="password" placeholder="********" autocomplete="current-password">
+            </label>
+            <button class="btn" type="submit">ログインする</button>
+          </form>
+        </div>
+        <div class="campus-page" id="campusPage">
+          <div class="panel-header">
+            <div>
+              <div class="chip" id="campusChip"></div>
+              <div class="panel-title" id="campusHeading"></div>
+              <p class="tagline" id="campusTagline"></p>
+            </div>
+            <button class="btn secondary" id="backToLogin">ログアウト</button>
+          </div>
+          <div class="campus-hero" id="campusHero">
+            <h2 id="campusTitle"></h2>
+            <p id="campusDescription"></p>
+            <div class="campus-actions">
+              <a class="btn" href="https://waseaca-faq.pages.dev/" target="_blank" rel="noreferrer">FAQへ</a>
+              <button class="btn secondary" id="openChecklist">料金チェック</button>
+            </div>
+          </div>
+          <div class="panel" id="checklistPanel" style="margin-top:18px; background:rgba(255,255,255,0.02); border-style:dashed; display:none;">
+            <div class="panel-title" style="margin-bottom:8px;">料金チェック（ダミー）</div>
+            <div class="checklist">
+              <label>① 学年
+                <select id="grade">
+                  <option>小学部</option>
+                  <option>中学部</option>
+                  <option>高校部</option>
+                  <option>その他</option>
+                </select>
+              </label>
+              <label>② 希望科目 / コース
+                <select id="course">
+                  <option>1科目</option>
+                  <option>2科目</option>
+                  <option>総合コース</option>
+                  <option>短期プログラム</option>
+                </select>
+              </label>
+              <label class="toggle">③ 兄弟の有無
+                <input type="checkbox" id="siblings">
+              </label>
+              <label class="toggle">④ バス利用
+                <input type="checkbox" id="bus">
+              </label>
+              <label class="toggle">⑤ 転校生ですか？
+                <input type="checkbox" id="transfer">
+              </label>
+              <button class="btn" type="button" id="simulateQuote">結果を確認する</button>
+              <div id="quoteResult" class="tagline"></div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-cta" id="pressArea">
+          <div class="press" tabindex="0">Press</div>
+          <div class="press-sub">クリックまたはEnterキーで入口へ</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const campusData = [
+      { id: 'sg', name: 'シンガポール校', meta: 'Singapore Campus', accent: '#7ae3ff', nuance: '海風を感じる透明感あるブルー。', copy: '探究心を解き放つ、インターナショナルな学びの玄関口。' },
+      { id: 'inter', name: 'インター校', meta: 'International Program', accent: '#9bf0e1', nuance: 'テックと創造性をつなぐミントグリーン。', copy: '多様な価値観が行き交う、つながりのハブ。' },
+      { id: 'kl', name: 'クアラルンプール校', meta: 'Kuala Lumpur', accent: '#ffb372', nuance: 'トロピカルで温かなアンバー。', copy: '未来を描く、あたたかい共創スペース。' },
+      { id: 'hcm', name: 'ホーチミン区校', meta: 'Ho Chi Minh City', accent: '#ff8fbd', nuance: '活気あるピンクマゼンタ。', copy: '街の鼓動を感じる、チャレンジングな空間。' },
+      { id: 'district7', name: '7区校', meta: 'District 7', accent: '#7f9bff', nuance: '静謐なブルーバイオレット。', copy: '落ち着きと集中をもたらす学習ベース。' },
+      { id: 'taipei', name: '台北校', meta: 'Taipei', accent: '#9acbff', nuance: '霧雨のようなペールブルー。', copy: 'カルチャーが交差する柔らかなまなざし。' },
+      { id: 'london', name: 'ロンドン校', meta: 'London', accent: '#c6a4ff', nuance: 'クラシックなラベンダー。', copy: '伝統と革新が共鳴するステージ。' }
+    ];
+
+    const state = { campus: null };
+    const selection = document.getElementById('selection');
+    const login = document.getElementById('login');
+    const campusPage = document.getElementById('campusPage');
+    const pressArea = document.getElementById('pressArea');
+    const campusGrid = document.getElementById('campusGrid');
+
+    function createCampusCards() {
+      campusGrid.innerHTML = '';
+      campusData.forEach((campus) => {
+        const card = document.createElement('div');
+        card.className = 'campus-card';
+        card.style.setProperty('--accent', campus.accent);
+        card.innerHTML = `
+          <div class="campus-name">${campus.name}</div>
+          <div class="campus-meta">${campus.meta}</div>
+          <div class="tagline">${campus.nuance}</div>
+          <div class="chip" style="background: ${campus.accent}1a; border-color: ${campus.accent}44; color: #fff;">ENTER</div>
+        `;
+        card.addEventListener('click', () => openLogin(campus));
+        campusGrid.appendChild(card);
+      });
+    }
+
+    function hideAll() {
+      [selection, login, campusPage].forEach(el => {
+        el.classList.remove('active');
+      });
+    }
+
+    function openSelection() {
+      hideAll();
+      selection.classList.add('active');
+      document.getElementById('resetBtn').style.display = 'inline-flex';
+    }
+
+    function openLogin(campus) {
+      state.campus = campus;
+      hideAll();
+      login.classList.add('active');
+      document.getElementById('loginTitle').textContent = `${campus.name} ログイン`;
+    }
+
+    function openCampusPage() {
+      if (!state.campus) return;
+      hideAll();
+      campusPage.classList.add('active');
+      const { campus } = state;
+      document.documentElement.style.setProperty('--accent', campus.accent);
+      document.getElementById('campusChip').textContent = campus.meta;
+      document.getElementById('campusHeading').textContent = `${campus.name} ポータル`;
+      document.getElementById('campusTagline').textContent = campus.nuance;
+      document.getElementById('campusTitle').textContent = campus.copy;
+      document.getElementById('campusDescription').textContent = '校舎ごとの最新情報・お知らせ・学習リソースへアクセスできます。FAQや料金チェックもこちらから。';
+      const hero = document.getElementById('campusHero');
+      hero.style.borderColor = campus.accent + '55';
+      hero.style.background = `linear-gradient(135deg, ${campus.accent}22, transparent 70%)`;
+      document.getElementById('checklistPanel').style.display = 'none';
+      document.getElementById('quoteResult').textContent = '';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      openCampusPage();
+    });
+
+    document.getElementById('pressArea').addEventListener('click', openSelection);
+    document.querySelector('.press').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openSelection();
+      }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      hideAll();
+      pressArea.style.display = 'block';
+      document.getElementById('resetBtn').style.display = 'none';
+    });
+
+    document.getElementById('backToSelection').addEventListener('click', openSelection);
+    document.getElementById('backToLogin').addEventListener('click', () => {
+      hideAll();
+      login.classList.add('active');
+    });
+
+    document.getElementById('openChecklist').addEventListener('click', () => {
+      const panel = document.getElementById('checklistPanel');
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.getElementById('simulateQuote').addEventListener('click', () => {
+      const grade = document.getElementById('grade').value;
+      const course = document.getElementById('course').value;
+      const siblings = document.getElementById('siblings').checked;
+      const bus = document.getElementById('bus').checked;
+      const transfer = document.getElementById('transfer').checked;
+      const base = 100;
+      const adjustments = (siblings ? -10 : 0) + (bus ? 8 : 0) + (transfer ? 5 : 0) + (course === '2科目' ? 15 : course === '総合コース' ? 22 : 0);
+      const result = base + adjustments;
+      document.getElementById('quoteResult').textContent = `${grade} / ${course} の想定料金イメージ: ${result} (ダミー)`;
+    });
+
+    createCampusCards();
+  </script>
+</body>
+</html>
