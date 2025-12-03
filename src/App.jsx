@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, Navig
 import { AnimatePresence } from 'framer-motion';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Background3D from './components/Background3D';
-import PulseEffects from './components/PulseEffects';
 import LandingPage from './components/LandingPage';
 import SchoolSelection from './components/SchoolSelection';
 import LoginOverlay from './components/LoginOverlay';
@@ -46,7 +45,6 @@ function AppContent() {
   return (
     <>
       <Background3D />
-      <PulseEffects />
 
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
