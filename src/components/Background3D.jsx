@@ -638,12 +638,18 @@ export default function Background3D() {
   return (
     <div
       className="fixed inset-0"
-      style={{ zIndex: -10, background: 'transparent', transition: 'background 1s ease', pointerEvents: 'none' }}
+      style={{ zIndex: 0, background: 'transparent', pointerEvents: 'none' }}
     >
       <Canvas
         gl={{ alpha: true, antialias: true }}
         onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
-        style={{ background: 'transparent', position: 'absolute', inset: 0, pointerEvents: 'none' }}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          pointerEvents: 'none',
+          background: 'transparent',
+          zIndex: 0,
+        }}
       >
         <PerspectiveCamera makeDefault position={[0, 0, 10]} />
         <ambientLight intensity={0.5} />
