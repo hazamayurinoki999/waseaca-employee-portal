@@ -129,11 +129,11 @@ export default function SchoolSelection({ onSelect }) {
                                     className="glass-panel rounded-2xl transition-all duration-300 relative overflow-hidden"
                                     style={{
                                         padding: '2rem',
-                                        background: 'rgba(15, 23, 42, 0.1)', // Very subtle background
-                                        backdropFilter: 'blur(4px)',
+                                        background: 'rgba(255, 255, 255, 0.02)', // Almost transparent
+                                        backdropFilter: 'blur(2px)', // Subtle blur
                                         minHeight: '200px',
-                                        border: 'none', // Explicitly remove border
-                                        boxShadow: 'none', // Remove default glass shadow
+                                        border: 'none',
+                                        boxShadow: 'none',
                                     }}
                                     whileHover={{
                                         background: 'rgba(15, 23, 42, 0.2)',
