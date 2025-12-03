@@ -73,7 +73,7 @@
 
 body {
   font-family: var(--font-main);
-  background: linear-gradient(to bottom right, var(--bg-gradient-from), var(--bg-gradient-to));
+  background: transparent;
   color: var(--color-text);
   overflow-y: auto;
   /* Enable vertical scrolling */
