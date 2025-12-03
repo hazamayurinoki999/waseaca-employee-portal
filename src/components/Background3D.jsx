@@ -636,8 +636,26 @@ export default function Background3D() {
   const config = seasonConfig[mode][season];
 
   return (
-    <div className="fixed inset-0" style={{ zIndex: -10, background: config.bgGradient, transition: 'background 1s ease', pointerEvents: 'none' }}>
-      <Canvas>
+    <div
+      className="fixed inset-0"
+      style={{
+        zIndex: 0,
+        background: 'transparent',
+        transition: 'background 1s ease',
+        pointerEvents: 'none',
+      }}
+    >
+      <Canvas
+        gl={{ alpha: true, antialias: true }}
+        onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          background: 'transparent',
+          zIndex: 0,
+        }}
+      >
         <PerspectiveCamera makeDefault position={[0, 0, 10]} />
         <ambientLight intensity={0.5} />
         {config.lights.map((light, i) => (
