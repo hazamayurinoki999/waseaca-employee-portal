@@ -86,13 +86,7 @@ html,
 body,
 #root {
   background: transparent !important;
-  background-color: transparent !important;
-}
 
-canvas {
-  background: transparent !important;
-  background-color: transparent !important;
-  pointer-events: none !important;
 }
 
 #root {
