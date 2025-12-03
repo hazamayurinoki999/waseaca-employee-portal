@@ -638,7 +638,12 @@ export default function Background3D() {
   return (
     <div
       className="fixed inset-0"
-      style={{ zIndex: 0, background: 'transparent', pointerEvents: 'none' }}
+      style={{
+        zIndex: 30,
+        background: 'transparent',
+        pointerEvents: 'none',
+        mixBlendMode: 'screen',
+      }}
     >
       <Canvas
         gl={{ alpha: true, antialias: true }}
@@ -648,7 +653,8 @@ export default function Background3D() {
           inset: 0,
           pointerEvents: 'none',
           background: 'transparent',
-          zIndex: 0,
+          zIndex: 30,
+          mixBlendMode: 'screen',
         }}
       >
         <PerspectiveCamera makeDefault position={[0, 0, 10]} />
