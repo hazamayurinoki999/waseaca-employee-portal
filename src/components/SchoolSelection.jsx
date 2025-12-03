@@ -4,7 +4,7 @@ import { MapPin, Globe } from 'lucide-react';
 import { schools } from '../data/schools';
 import ThemeToggle from './ThemeToggle';
 import SeasonSelector from './SeasonSelector';
-import Earth3D from './Earth3D';
+
 import Header from './Header';
 
 const regionIcons = {
@@ -60,10 +60,7 @@ export default function SchoolSelection({ onSelect }) {
             <ThemeToggle />
             <SeasonSelector />
 
-            {/* 3D Earth Background - Passes both hovered and selected state */}
-            {/* If a school is selected, we want to zoom to it. If just hovered, maybe rotate to it? */}
-            {/* For now, let's pass the one that should dictate the camera target */}
-            <Earth3D selectedSchool={selectedSchool || hoveredSchool} />
+            {/* Earth components removed as per user request */}
 
             <div className="absolute-full flex flex-col items-center justify-center p-4 md:p-10" style={{ zIndex: 10, paddingTop: '80px' }}>
                 <motion.div
