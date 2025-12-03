@@ -126,16 +126,17 @@ export default function SchoolSelection({ onSelect }) {
 
                                 {/* Card */}
                                 <motion.div
-                                    className="glass-panel rounded-2xl border-2 transition-all duration-300 relative overflow-hidden"
+                                    className="glass-panel rounded-2xl transition-all duration-300 relative overflow-hidden"
                                     style={{
                                         padding: '2rem',
-                                        borderColor: 'var(--glass-border)',
-                                        background: 'rgba(15, 23, 42, 0.3)', // More transparent background
-                                        backdropFilter: 'blur(8px)',
+                                        background: 'rgba(15, 23, 42, 0.1)', // Very subtle background
+                                        backdropFilter: 'blur(4px)',
                                         minHeight: '200px',
+                                        border: 'none', // Explicitly remove border
+                                        boxShadow: 'none', // Remove default glass shadow
                                     }}
                                     whileHover={{
-                                        borderColor: schoolColors[school.id],
+                                        background: 'rgba(15, 23, 42, 0.2)',
                                     }}
                                 >
                                     {/* Shimmer effect */}
