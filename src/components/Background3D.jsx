@@ -639,8 +639,9 @@ export default function Background3D() {
     <div
       className="fixed inset-0"
       style={{
-        zIndex: -5,
+        zIndex: -10,
         background: 'transparent',
+        transition: 'background 1s ease',
         pointerEvents: 'none',
       }}
     >
@@ -648,11 +649,11 @@ export default function Background3D() {
         gl={{ alpha: true, antialias: true }}
         onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
         style={{
-          position: 'fixed',
+          position: 'absolute',
           inset: 0,
           pointerEvents: 'none',
           background: 'transparent',
-          zIndex: -5,
+          zIndex: -10,
         }}
       >
         <PerspectiveCamera makeDefault position={[0, 0, 10]} />
