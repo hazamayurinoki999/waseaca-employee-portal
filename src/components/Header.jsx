@@ -10,8 +10,8 @@ export default function Header() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="fixed top-0 left-0 w-full z-40 px-6 py-4 flex items-center justify-between"
             style={{
-                background: 'linear-gradient(to bottom, rgba(15, 23, 42, 0.8), transparent)',
-                backdropFilter: 'blur(4px)'
+                background: 'linear-gradient(to bottom, rgba(122, 227, 255, 0.05), transparent)',
+                backdropFilter: 'blur(2px)'
             }}
         >
             {/* Logo / Title */}

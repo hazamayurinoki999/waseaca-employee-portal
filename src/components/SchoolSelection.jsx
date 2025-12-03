@@ -129,8 +129,8 @@ export default function SchoolSelection({ onSelect }) {
                                     className="glass-panel rounded-2xl transition-all duration-300 relative overflow-hidden"
                                     style={{
                                         padding: '2rem',
-                                        background: 'rgba(255, 255, 255, 0.02)', // Almost transparent
-                                        backdropFilter: 'blur(2px)', // Subtle blur
+                                        background: 'rgba(122, 227, 255, 0.05)', // Transparent light blue
+                                        backdropFilter: 'blur(2px)',
                                         minHeight: '200px',
                                         border: 'none',
                                         boxShadow: 'none',
