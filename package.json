@@ -1,0 +1,21 @@
+{
+    "name": "waseaca-employee-portal",
+    "version": "1.0.0",
+    "description": "早稲田アカデミー海外校ポータルサイト",
+    "scripts": {
+        "build": "echo 'No build required - static site' && exit 0",
+        "dev": "echo 'Open index.html in your browser'",
+        "start": "echo 'This is a static site. Open index.html in your browser.'"
+    },
+    "keywords": [
+        "portal",
+        "waseda",
+        "academy"
+    ],
+    "author": "",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hazamayurinoki999/waseaca-employee-portal"
+    }
+}
