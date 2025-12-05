@@ -726,6 +726,23 @@ body[data-theme="dark"] .theme-icon.dark {
     transform: translateX(5px);
 }
 
+/* ===================================
+   FEE CHECK PAGE
+   =================================== */
+
+.fee-check-container {
+    max-width: 900px;
+    width: 90%;
+    padding: 2rem;
+    max-height: 85vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.fee-check-header {
+    margin-bottom: 2rem;
+}
+
 .fee-check-title {
     text-align: center;
     display: flex;
