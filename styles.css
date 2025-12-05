@@ -782,8 +782,8 @@ body[data-theme="dark"] .theme-icon.dark {
 }
 
 .checkbox-group {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
 }
 
@@ -904,6 +904,10 @@ body[data-theme="dark"] .theme-icon.dark {
     }
 
     .school-page-links {
+        grid-template-columns: 1fr;
+    }
+
+    .checkbox-group {
         grid-template-columns: 1fr;
     }
 }
