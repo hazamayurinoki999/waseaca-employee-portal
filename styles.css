@@ -255,6 +255,21 @@ body[data-theme="dark"] .theme-icon.dark {
 }
 
 .page.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+/* ===================================
+   ENTRANCE PAGE
+   =================================== */
+
+#entrancePage {
+    cursor: pointer;
+}
+
+.entrance-content {
+    text-align: center;
     animation: floatAnimation 3s ease-in-out infinite;
 }
 
