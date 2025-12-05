@@ -1,0 +1,126 @@
+/* ===================================
+   AMBIENT LIGHT EFFECTS
+   =================================== */
+
+/* Floating light orbs background effect */
+#bgCanvas::before,
+#bgCanvas::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+    animation: floatOrb 20s ease-in-out infinite;
+    pointer-events: none;
+}
+
+#bgCanvas::before {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--season-primary), transparent);
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+#bgCanvas::after {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--season-secondary), transparent);
+    bottom: 20%;
+    right: 10%;
+    animation-delay: 10s;
+}
+
+@keyframes floatOrb {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.3;
+    }
+
+    25% {
+        transform: translate(50px, -30px) scale(1.1);
+        opacity: 0.4;
+    }
+
+    50% {
+        transform: translate(-30px, 50px) scale(0.9);
+        opacity: 0.25;
+    }
+
+    75% {
+        transform: translate(40px, 30px) scale(1.05);
+        opacity: 0.35;
+    }
+}
+
+/* Add subtle glow to cards on hover */
+.school-card:hover,
+.login-container:hover,
+.school-link:hover {
+    box-shadow: 0 20px 60px var(--shadow-color),
+        0 0 40px rgba(var(--season-primary-rgb), 0.2);
+}
+
+/* Shimmer effect for entrance text */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.entrance-title::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent);
+    animation: shimmer 3s ease-in-out infinite;
+    background-size: 1000px 100%;
+}
+
+.entrance-title {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Glowing borders for active elements */
+.login-input:focus,
+.season-select:focus,
+.theme-btn:focus {
+    box-shadow: 0 0 0 4px rgba(var(--season-primary-rgb), 0.2),
+        0 0 20px rgba(var(--season-primary-rgb), 0.3);
+}
+
+/* Pulsing glow on submit buttons */
+.login-submit,
+.fee-submit {
+    box-shadow: 0 10px 30px var(--shadow-color),
+        0 0 30px rgba(var(--season-primary-rgb), 0.3);
+    animation: buttonGlow 2s ease-in-out infinite;
+}
+
+@keyframes buttonGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 10px 30px var(--shadow-color),
+            0 0 30px rgba(var(--season-primary-rgb), 0.3);
+    }
+
+    50% {
+        box-shadow: 0 10px 30px var(--shadow-color),
+            0 0 50px rgba(var(--season-primary-rgb), 0.5);
+    }
+}

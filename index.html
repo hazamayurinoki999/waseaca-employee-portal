@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>早稲田アカデミー海外校ポータル</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="scrollbar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body data-theme="light" data-season="spring">
+    <!-- Canvas for background animations -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Theme Controls -->
+    <div class="theme-controls">
+        <div class="control-group">
+            <label for="themeToggle">
+                <span class="control-label">テーマ</span>
+                <span class="control-sublabel">Theme</span>
+            </label>
+            <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
+                <span class="theme-icon light">☀️</span>
+                <span class="theme-icon dark">🌙</span>
+            </button>
+        </div>
+        <div class="control-group">
+            <label for="seasonSelect">
+                <span class="control-label">季節</span>
+                <span class="control-sublabel">Season</span>
+            </label>
+            <select id="seasonSelect" class="season-select">
+                <option value="spring">春 Spring</option>
+                <option value="summer">夏 Summer</option>
+                <option value="autumn">秋 Autumn</option>
+                <option value="winter">冬 Winter</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Entrance Page -->
+    <div id="entrancePage" class="page active">
+        <div class="entrance-content">
+            <h1 class="entrance-title">
+                <span class="pulse-text">Press</span>
+            </h1>
+            <p class="entrance-subtitle">画面をクリックしてください</p>
+        </div>
+    </div>
+
+    <!-- School Selection Page -->
+    <div id="schoolSelectionPage" class="page">
+        <div class="page-header">
+            <h2 class="page-title">
+                <span class="title-main">校舎を選択してください</span>
+                <span class="title-sub">SELECT CAMPUS</span>
+            </h2>
+        </div>
+        <div class="school-grid" id="schoolGrid">
+            <!-- Schools will be dynamically generated -->
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="page">
+        <div class="login-container">
+            <div class="login-header">
+                <button class="back-btn" id="loginBackBtn">← 戻る</button>
+                <h2 class="login-title">
+                    <span class="school-name-display" id="selectedSchoolName"></span>
+                    <span class="login-subtitle">ログイン Login</span>
+                </h2>
+            </div>
+            <form class="login-form" id="loginForm">
+                <div class="input-group">
+                    <label for="email" class="input-label">
+                        <span class="label-main">メールアドレス</span>
+                        <span class="label-sub">Email Address</span>
+                    </label>
+                    <input type="email" id="email" class="login-input" placeholder="example@email.com" />
+                </div>
+                <div class="input-group">
+                    <label for="password" class="input-label">
+                        <span class="label-main">パスワード</span>
+                        <span class="label-sub">Password</span>
+                    </label>
+                    <input type="password" id="password" class="login-input" placeholder="••••••••" />
+                </div>
+                <button type="submit" class="login-submit">
+                    <span class="btn-main">ログイン</span>
+                    <span class="btn-sub">Login</span>
+                </button>
+                <p class="test-mode-notice">*テストモードのため、入力なしでもログイン可能です</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- School Page -->
+    <div id="schoolPage" class="page">
+        <div class="school-page-container">
+            <div class="school-page-header">
+                <button class="back-btn" id="schoolBackBtn">← ログアウト</button>
+                <h2 class="school-page-title" id="schoolPageTitle"></h2>
+            </div>
+            <div class="school-page-content">
+                <div class="school-page-welcome">
+                    <h3 class="welcome-text">
+                        <span class="welcome-main">ようこそ</span>
+                        <span class="welcome-sub">Welcome</span>
+                    </h3>
+                    <p class="welcome-description" id="schoolDescription"></p>
+                </div>
+                <div class="school-page-links">
+                    <a href="https://waseaca-faq.pages.dev/" target="_blank" class="school-link" id="faqLink">
+                        <div class="link-icon">❓</div>
+                        <div class="link-content">
+                            <span class="link-main">よくある質問</span>
+                            <span class="link-sub">FAQ</span>
+                        </div>
+                        <div class="link-arrow">→</div>
+                    </a>
+                    <button class="school-link" id="feeCheckLink">
+                        <div class="link-icon">💰</div>
+                        <div class="link-content">
+                            <span class="link-main">料金チェック</span>
+                            <span class="link-sub">Fee Check</span>
+                        </div>
+                        <div class="link-arrow">→</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fee Check Page -->
+    <div id="feeCheckPage" class="page">
+        <div class="fee-check-container">
+            <div class="fee-check-header">
+                <button class="back-btn" id="feeBackBtn">← 戻る</button>
+                <h2 class="fee-check-title">
+                    <span class="title-main">料金チェック</span>
+                    <span class="title-sub">Fee Check</span>
+                </h2>
+            </div>
+            <form class="fee-check-form" id="feeCheckForm">
+                <div class="form-step">
+                    <h3 class="step-title">
+                        <span class="step-number">1</span>
+                        <span class="step-text">学年を選択してください</span>
+                        <span class="step-sub">Select Grade</span>
+                    </h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="radio" name="grade" value="elementary1">
+                            <span class="checkbox-text">小学1年生 Elementary 1st</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="grade" value="elementary2">
+                            <span class="checkbox-text">小学2年生 Elementary 2nd</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="grade" value="elementary3">
+                            <span class="checkbox-text">小学3年生 Elementary 3rd</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="grade" value="elementary4">
+                            <span class="checkbox-text">小学4年生 Elementary 4th</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="grade" value="elementary5">
+                            <span class="checkbox-text">小学5年生 Elementary 5th</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="grade" value="elementary6">
+                            <span class="checkbox-text">小学6年生 Elementary 6th</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="grade" value="junior1">
+                            <span class="checkbox-text">中学1年生 Junior High 1st</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="grade" value="junior2">
+                            <span class="checkbox-text">中学2年生 Junior High 2nd</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="grade" value="junior3">
+                            <span class="checkbox-text">中学3年生 Junior High 3rd</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-step">
+                    <h3 class="step-title">
+                        <span class="step-number">2</span>
+                        <span class="step-text">希望科目を選択してください</span>
+                        <span class="step-sub">Select Subjects</span>
+                    </h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="subject" value="math">
+                            <span class="checkbox-text">算数・数学 Mathematics</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="subject" value="japanese">
+                            <span class="checkbox-text">国語 Japanese</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="subject" value="english">
+                            <span class="checkbox-text">英語 English</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="subject" value="science">
+                            <span class="checkbox-text">理科 Science</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="subject" value="social">
+                            <span class="checkbox-text">社会 Social Studies</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="subject" value="course-standard">
+                            <span class="checkbox-text">標準コース Standard Course</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="subject" value="course-advanced">
+                            <span class="checkbox-text">発展コース Advanced Course</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-step">
+                    <h3 class="step-title">
+                        <span class="step-number">3</span>
+                        <span class="step-text">兄弟姉妹の有無</span>
+                        <span class="step-sub">Siblings Enrollment</span>
+                    </h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="radio" name="siblings" value="yes">
+                            <span class="checkbox-text">あり Yes</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="siblings" value="no">
+                            <span class="checkbox-text">なし No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-step">
+                    <h3 class="step-title">
+                        <span class="step-number">4</span>
+                        <span class="step-text">バス利用の有無</span>
+                        <span class="step-sub">Bus Service</span>
+                    </h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="radio" name="bus" value="yes">
+                            <span class="checkbox-text">利用する Yes</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="bus" value="no">
+                            <span class="checkbox-text">利用しない No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-step">
+                    <h3 class="step-title">
+                        <span class="step-number">5</span>
+                        <span class="step-text">転校生かどうか</span>
+                        <span class="step-sub">Transfer Student</span>
+                    </h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="radio" name="transfer" value="yes">
+                            <span class="checkbox-text">はい Yes</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="transfer" value="no">
+                            <span class="checkbox-text">いいえ No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="fee-submit">
+                    <span class="btn-main">料金を計算する</span>
+                    <span class="btn-sub">Calculate Fee</span>
+                </button>
+
+                <div class="fee-result" id="feeResult" style="display: none;">
+                    <h3 class="result-title">概算料金 Estimated Fee</h3>
+                    <p class="result-amount" id="feeAmount">¥0</p>
+                    <p class="result-notice">*この料金は概算です。詳細はお問い合わせください。</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="schools-data.js"></script>
+    <script src="animations.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

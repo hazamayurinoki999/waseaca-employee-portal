@@ -1,0 +1,894 @@
+/* ===================================
+   CSS CUSTOM PROPERTIES - THEME SYSTEM
+   =================================== */
+
+:root {
+    /* Base Colors - Light Theme */
+    --bg-primary: #f8f9fa;
+    --bg-secondary: rgba(255, 255, 255, 0.7);
+    --bg-glass: rgba(255, 255, 255, 0.15);
+    --bg-glass-hover: rgba(255, 255, 255, 0.25);
+
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+
+    --border-color: rgba(255, 255, 255, 0.3);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+
+    /* Spring Theme (Default) */
+    --season-primary: #FFB3D9;
+    --season-secondary: #C2F0FC;
+    --season-accent: #FFDEE9;
+    --season-gradient-1: #FBD3E9;
+    --season-gradient-2: #B5F0FC;
+}
+
+/* Dark Theme */
+body[data-theme="dark"] {
+    --bg-primary: #03060b;
+    --bg-secondary: rgba(10, 15, 25, 0.9);
+    --bg-glass: rgba(15, 20, 35, 0.5);
+    --bg-glass-hover: rgba(20, 30, 45, 0.6);
+
+    --text-primary: #f8f9fa;
+    --text-secondary: #b8b9ba;
+    --text-tertiary: #808080;
+
+    --border-color: rgba(255, 255, 255, 0.15);
+    --shadow-color: rgba(0, 0, 0, 0.7);
+}
+
+/* ===================================
+   SEASONAL THEMES
+   =================================== */
+
+/* Spring - Cherry Blossom */
+body[data-season="spring"] {
+    --season-primary: #FFB3D9;
+    --season-secondary: #C2F0FC;
+    --season-accent: #FFDEE9;
+    --season-gradient-1: #FBD3E9;
+    --season-gradient-2: #B5F0FC;
+}
+
+body[data-theme="dark"][data-season="spring"] {
+    --season-gradient-1: #4A1A35;
+    --season-gradient-2: #1A2A40;
+}
+
+/* Summer - Ocean Breeze */
+body[data-season="summer"] {
+    --season-primary: #4FACFE;
+    --season-secondary: #00F2FE;
+    --season-accent: #43E97B;
+    --season-gradient-1: #38F9D7;
+    --season-gradient-2: #4FACFE;
+}
+
+body[data-theme="dark"][data-season="summer"] {
+    --season-gradient-1: #0A2A35;
+    --season-gradient-2: #1A3A50;
+}
+
+/* Autumn - Warm Leaves */
+body[data-season="autumn"] {
+    --season-primary: #FA709A;
+    --season-secondary: #FEE140;
+    --season-accent: #FFB347;
+    --season-gradient-1: #FEE140;
+    --season-gradient-2: #FA709A;
+}
+
+body[data-theme="dark"][data-season="autumn"] {
+    --season-gradient-1: #3A2010;
+    --season-gradient-2: #4A1A2A;
+}
+
+/* Winter - Ice Crystal */
+body[data-season="winter"] {
+    --season-primary: #A8EDEA;
+    --season-secondary: #FED6E3;
+    --season-accent: #D4F1F4;
+    --season-gradient-1: #A8EDEA;
+    --season-gradient-2: #D4F1F4;
+}
+
+body[data-theme="dark"][data-season="winter"] {
+    --season-gradient-1: #0A2A30;
+    --season-gradient-2: #1A2535;
+}
+
+/* ===================================
+   GLOBAL STYLES
+   =================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background 0.6s ease, color 0.6s ease;
+    position: relative;
+}
+
+/* ===================================
+   CANVAS BACKGROUND
+   =================================== */
+
+#bgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(135deg, var(--season-gradient-1) 0%, var(--season-gradient-2) 100%);
+    transition: background 0.8s ease;
+}
+
+/* ===================================
+   THEME CONTROLS
+   =================================== */
+
+.theme-controls {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.control-group label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.2rem;
+}
+
+.control-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.control-sublabel {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+}
+
+.theme-btn {
+    background: var(--bg-glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.theme-btn:hover {
+    background: var(--bg-glass-hover);
+    transform: scale(1.1) rotate(15deg);
+}
+
+.theme-icon {
+    position: absolute;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+body[data-theme="light"] .theme-icon.dark,
+body[data-theme="dark"] .theme-icon.light {
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);
+}
+
+body[data-theme="light"] .theme-icon.light,
+body[data-theme="dark"] .theme-icon.dark {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.season-select {
+    background: var(--bg-glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 0.7rem 1rem;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.season-select:hover {
+    background: var(--bg-glass-hover);
+    transform: translateY(-2px);
+}
+
+.season-select option {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* ===================================
+   PAGE TRANSITIONS
+   =================================== */
+
+.page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease, visibility 0.6s ease, transform 0.6s ease;
+    transform: scale(0.95);
+}
+
+.page.active {
+    animation: floatAnimation 3s ease-in-out infinite;
+}
+
+.entrance-title {
+    font-size: 8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--season-primary), var(--season-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    letter-spacing: 0.5rem;
+}
+
+.pulse-text {
+    display: inline-block;
+    animation: pulseAnimation 2s ease-in-out infinite;
+}
+
+.entrance-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+    letter-spacing: 0.2rem;
+}
+
+@keyframes floatAnimation {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes pulseAnimation {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+/* ===================================
+   SCHOOL SELECTION PAGE
+   =================================== */
+
+.page-header {
+    position: absolute;
+    top: 6rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 10;
+}
+
+.page-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.title-main {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.1rem;
+}
+
+.title-sub {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.3rem;
+}
+
+.school-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 1400px;
+    padding: 2rem;
+    margin-top: 8rem;
+}
+
+.school-card {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.school-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--school-color), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.school-card:hover::before {
+    opacity: 1;
+}
+
+.school-card:hover {
+    background: var(--bg-glass-hover);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px var(--shadow-color);
+}
+
+.school-card:active {
+    transform: translateY(-8px) scale(0.98);
+}
+
+.school-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--school-color), var(--season-accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    animation: rotateAnimation 10s linear infinite;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.school-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.school-name-sub {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+}
+
+/* ===================================
+   LOGIN PAGE
+   =================================== */
+
+.login-container {
+    max-width: 500px;
+    width: 90%;
+    background: var(--bg-glass);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--border-color);
+    border-radius: 2rem;
+    padding: 3rem;
+    box-shadow: 0 20px 60px var(--shadow-color);
+}
+
+.login-header {
+    margin-bottom: 2rem;
+}
+
+.back-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.back-btn:hover {
+    color: var(--text-primary);
+    transform: translateX(-5px);
+}
+
+.login-title {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.school-name-display {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.login-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.input-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.label-main {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.label-sub {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+}
+
+.login-input {
+    background: var(--bg-glass);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.login-input:focus {
+    border-color: var(--season-primary);
+    background: var(--bg-glass-hover);
+    box-shadow: 0 0 0 4px rgba(255, 179, 217, 0.1);
+}
+
+.login-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.login-submit {
+    background: linear-gradient(135deg, var(--season-primary), var(--season-secondary));
+    border: none;
+    border-radius: 1rem;
+    padding: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.login-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px var(--shadow-color);
+}
+
+.login-submit:active {
+    transform: translateY(-1px);
+}
+
+.btn-main {
+    font-size: 1.1rem;
+}
+
+.btn-sub {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    font-family: 'Inter', sans-serif;
+}
+
+.test-mode-notice {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+    margin-top: 0.5rem;
+}
+
+/* ===================================
+   SCHOOL PAGE
+   =================================== */
+
+.school-page-container {
+    max-width: 800px;
+    width: 90%;
+    padding: 2rem;
+}
+
+.school-page-header {
+    margin-bottom: 3rem;
+}
+
+.school-page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.school-page-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.school-page-welcome {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    text-align: center;
+}
+
+.welcome-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.welcome-main {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.welcome-sub {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+}
+
+.welcome-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+.school-page-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.school-link {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+}
+
+.school-link:hover {
+    background: var(--bg-glass-hover);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px var(--shadow-color);
+}
+
+.link-icon {
+    font-size: 2.5rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--season-primary), var(--season-secondary));
+    border-radius: 50%;
+}
+
+.link-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.link-main {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.link-sub {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+}
+
+.link-arrow {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    transition: transform 0.3s ease;
+}
+
+.school-link:hover .link-arrow {
+    transform: translateX(5px);
+}
+
+.fee-check-title {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.fee-check-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.form-step {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 1.5rem;
+    padding: 2rem;
+}
+
+.step-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: linear-gradient(135deg, var(--season-primary), var(--season-secondary));
+    border-radius: 50%;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.step-text {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 0.5rem;
+}
+
+.step-sub {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-glass);
+    border: 2px solid var(--border-color);
+    border-radius: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.checkbox-label:hover {
+    background: var(--bg-glass-hover);
+    border-color: var(--season-primary);
+}
+
+.checkbox-label input {
+    width: 1.3rem;
+    height: 1.3rem;
+    cursor: pointer;
+    accent-color: var(--season-primary);
+}
+
+.checkbox-text {
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.fee-submit {
+    background: linear-gradient(135deg, var(--season-primary), var(--season-secondary));
+    border: none;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    margin-top: 1rem;
+}
+
+.fee-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px var(--shadow-color);
+}
+
+.fee-result {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--season-primary);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.result-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.result-amount {
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--season-primary), var(--season-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
+
+.result-notice {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+@media (max-width: 768px) {
+    .entrance-title {
+        font-size: 4rem;
+    }
+
+    .title-main {
+        font-size: 1.8rem;
+    }
+
+    .school-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 6rem;
+    }
+
+    .theme-controls {
+        top: 1rem;
+        right: 1rem;
+        gap: 1rem;
+    }
+
+    .login-container,
+    .school-page-container,
+    .fee-check-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .school-page-links {
+        grid-template-columns: 1fr;
+    }
+}
