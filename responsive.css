@@ -1,4 +1,60 @@
-@media (min-width: 769px) and (max-width: 1200px) {
+/* Mobile devices only - Enable scrolling without affecting PC layout */
+@media (max-width: 600px) {
+
+    /* Enable full page scrolling on mobile */
+    body {
+        overflow-y: scroll;
+        height: auto;
+    }
+
+    /* Enable scrolling on school selection page */
+    #schoolSelectionPage {
+        position: static !important;
+        display: block !important;
+        height: auto !important;
+        overflow-y: visible;
+    }
+
+    .page-header {
+        position: relative;
+        padding: 5rem 1rem 1.5rem;
+    }
+
+    .school-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem 3rem;
+        margin: 0;
+        width: 100%;
+    }
+
+    .title-main {
+        font-size: 1.8rem;
+    }
+
+    .title-sub {
+        font-size: 0.85rem;
+    }
+
+    .school-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .school-page-container {
+        width: 95%;
+        padding: 1rem;
+        max-height: 80vh;
+    }
+
+    .theme-controls {
+        top: 1rem;
+        right: 1rem;
+        gap: 1rem;
+    }
+}
+
+/* Tablets (601px to 1200px) - 2 column layout */
+@media (min-width: 601px) and (max-width: 1200px) {
     .school-grid {
         grid-template-columns: repeat(2, 1fr);
     }

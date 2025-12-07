@@ -3,26 +3,36 @@
    =================================== */
 
 /* Webkit browsers (Chrome, Safari, Edge) */
+#schoolSelectionPage::-webkit-scrollbar,
+.school-page-container::-webkit-scrollbar,
 .fee-check-container::-webkit-scrollbar {
     width: 10px;
 }
 
+#schoolSelectionPage::-webkit-scrollbar-track,
+.school-page-container::-webkit-scrollbar-track,
 .fee-check-container::-webkit-scrollbar-track {
     background: var(--bg-glass);
     border-radius: 10px;
 }
 
+#schoolSelectionPage::-webkit-scrollbar-thumb,
+.school-page-container::-webkit-scrollbar-thumb,
 .fee-check-container::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, var(--season-primary), var(--season-secondary));
     border-radius: 10px;
     border: 2px solid var(--bg-glass);
 }
 
+#schoolSelectionPage::-webkit-scrollbar-thumb:hover,
+.school-page-container::-webkit-scrollbar-thumb:hover,
 .fee-check-container::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, var(--season-secondary), var(--season-primary));
 }
 
 /* Firefox */
+#schoolSelectionPage,
+.school-page-container,
 .fee-check-container {
     scrollbar-width: thin;
     scrollbar-color: var(--season-primary) var(--bg-glass);
