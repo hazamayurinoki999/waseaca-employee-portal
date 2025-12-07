@@ -8,7 +8,9 @@
     }
 
     /* Enable scrolling on school selection page */
-    #schoolSelectionPage {
+    #schoolSelectionPage,
+    #loginPage,
+    #schoolPage {
         position: static !important;
         display: block !important;
         height: auto !important;
