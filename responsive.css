@@ -17,14 +17,14 @@
 
     .page-header {
         position: relative;
-        padding: 5rem 1rem 1.5rem;
+        padding: 5rem 1rem 4rem;
     }
 
     .school-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
         padding: 0 1rem 3rem;
-        margin: 0;
+        margin: 1.5rem 0 0;
         width: 100%;
     }
 
