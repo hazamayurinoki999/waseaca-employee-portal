@@ -8,13 +8,21 @@
     }
 
     /* Enable scrolling on school selection page */
-    #schoolSelectionPage,
-    #loginPage,
-    #schoolPage {
+    /* Enable scrolling on active pages only */
+    #schoolSelectionPage.active,
+    #loginPage.active,
+    #schoolPage.active {
         position: static !important;
         display: block !important;
         height: auto !important;
         overflow-y: visible;
+    }
+
+    /* Hide inactive pages on mobile to prevent spacing issues */
+    #schoolSelectionPage:not(.active),
+    #loginPage:not(.active),
+    #schoolPage:not(.active) {
+        display: none !important;
     }
 
     .page-header {
