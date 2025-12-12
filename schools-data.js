@@ -5,7 +5,8 @@ const SCHOOLS = [
         nameJa: 'シンガポール校',
         nameEn: 'Singapore',
         color: '#FF6B9D',
-        description: 'シンガポールの中心で質の高い教育を提供しています。'
+        description: 'シンガポールの中心で質の高い教育を提供しています。',
+        requiresAuth: true // 認証必須
     },
     {
         id: 'international',
