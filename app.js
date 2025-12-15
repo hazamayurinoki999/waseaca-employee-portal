@@ -197,6 +197,33 @@ function showSchoolPage() {
     restoreUserPreferences();
 }
 
+// 遷移用オーバーレイの表示
+function showTransitionOverlay(message) {
+    let overlay = document.getElementById('transitionOverlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'transitionOverlay';
+        overlay.style.cssText = `
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.95); z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: #fff; font-family: 'Noto Sans JP', sans-serif;
+            opacity: 0; transition: opacity 0.3s ease;
+        `;
+        overlay.innerHTML = `
+            <div style="font-size: 40px; margin-bottom: 20px; animation: bounce 1s infinite;">🌏</div>
+            <div style="font-size: 18px; font-weight: 500; letter-spacing: 0.05em;">${message}</div>
+            <div style="margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.6); font-family: 'Inter', sans-serif;">Connecting...</div>
+            <style>
+                @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+            </style>
+        `;
+        document.body.appendChild(overlay);
+        // Fade in
+        requestAnimationFrame(() => overlay.style.opacity = '1');
+    }
+}
+
 function initSchoolPage() {
     const schoolBackBtn = document.getElementById('schoolBackBtn');
     const feeCheckLink = document.getElementById('feeCheckLink');
@@ -221,6 +248,9 @@ function initSchoolPage() {
         if (currentSchool && currentSchool.requiresAuth) {
             e.preventDefault(); // デフォルトのリンク動作を停止
 
+            // 【重要】モバイル対策：同一タブ遷移に変更し、ローディング画面を表示
+            showTransitionOverlay('FAQセンターへ接続中...');
+
             try {
                 // FAQ用トークンを生成
                 const user = await WaseacaAuth.getCurrentUser();
@@ -228,25 +258,28 @@ function initSchoolPage() {
                     const token = await WaseacaAuth.generateFAQToken(user.email, user.schoolId);
                     const faqUrl = `https://waseaca-faq.pages.dev/?authToken=${token}&mode=teacher`;
 
-                    // 新しいタブで開く
-                    window.open(faqUrl, '_blank');
+                    // 少しだけウェイトを入れてアニメーションを見せる（UX）
+                    await new Promise(r => setTimeout(r, 800));
+
+                    // 同一タブで遷移（ポップアップブロック回避）
+                    window.location.href = faqUrl;
                 } else {
-                    // セッションが切れている場合はログインページへ
-                    showPage('loginPage');
+                    // セッション切れ
+                    setTimeout(() => {
+                        const ol = document.getElementById('transitionOverlay');
+                        if (ol) ol.style.opacity = '0';
+                        setTimeout(() => ol && ol.remove(), 300);
+                        showPage('loginPage');
+                    }, 500);
                 }
             } catch (error) {
                 console.error('Failed to generate FAQ token:', error);
-                // エラー時は通常のリンクとして開く
-                window.open('https://waseaca-faq.pages.dev/', '_blank');
+                // エラー時は通常のリンクとして飛ぶ
+                window.location.href = 'https://waseaca-faq.pages.dev/';
             }
         }
-        // 認証不要の校舎の場合はデフォルトのリンク動作（通常モード）
     });
 }
-
-// ===================================
-// FEE CHECK PAGE
-// ===================================
 
 function initFeeCheckPage() {
     const feeBackBtn = document.getElementById('feeBackBtn');
